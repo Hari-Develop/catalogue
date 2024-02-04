@@ -23,6 +23,7 @@ pipeline {
                 sh """
                     echo installing npm dependences 
                     npm install
+                    ls -la
                     """ 
             }
         }
