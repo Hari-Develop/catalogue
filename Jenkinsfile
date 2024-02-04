@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         // using the envirnoment varibales here
-        Package_version = ''
+        PackageVersion = ''
     }
     // options {
     //     timeout (time: 1, unit: "SECONDS")
@@ -15,11 +15,12 @@ pipeline {
     // }
     stages {
         stage("Read JSON File"){
-        steps{
-            script {
-                def Package_version = readJSON file: 'package.json'
+            steps{
+                script {
+                    def Package_version = readJSON file: 'package.json'
+                    PackageVersion = Package_version.version
+                }
             }
-        }
         }
         stage('Build') {
             steps {
