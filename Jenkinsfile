@@ -22,6 +22,7 @@ pipeline {
                 // Add npm steps here
                 sh """
                     echo installing npm dependences 
+                    pwd
                     npm install
                     ls -la
                     """ 
