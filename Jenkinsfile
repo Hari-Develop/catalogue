@@ -4,10 +4,16 @@ pipeline {
             label 'workstation'
         } 
     }
+    stage("Read JSON File"){
+        steps{
+            script {
+                def Package_version = readJSON file: 'package.json'
+            }
+        }
+    }
     environment {
         // using the envirnoment varibales here
-        TESTING_VERSION = "1.0.0"
-        DEPLOYING_VERSION = "${TESTING_VERSION}"
+        Package_version = '${package_version.version}'
     }
     options {
         timeout (time: 1, unit: "SECONDS")
@@ -19,7 +25,7 @@ pipeline {
             steps {
                 // Add build steps here
                 sh """
-                    echo Building the build envirnoment
+                    echo Building the build ${Package_version}
                     """ 
             }
         }
