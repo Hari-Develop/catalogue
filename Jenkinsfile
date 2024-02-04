@@ -17,11 +17,12 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
+        stage('installing dependences') {
             steps {
-                // Add build steps here
+                // Add npm steps here
                 sh """
-                    echo Building the build ${PackageVersion}
+                    echo installing npm dependences 
+                    npm install
                     """ 
             }
         }
