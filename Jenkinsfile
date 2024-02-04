@@ -4,16 +4,9 @@ pipeline {
             label 'workstation'
         } 
     }
-    stage("Read JSON File"){
-        steps{
-            script {
-                def Package_version = readJSON file: 'package.json'
-            }
-        }
-    }
     environment {
         // using the envirnoment varibales here
-        Package_version = '${package_version.version}'
+        Package_version = ''
     }
     options {
         timeout (time: 1, unit: "SECONDS")
