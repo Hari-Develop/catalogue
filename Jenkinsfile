@@ -8,11 +8,6 @@ pipeline {
         // using the envirnoment varibales here
         PackageVersion = ''
     }
-    // options {
-    //     timeout (time: 1, unit: "SECONDS")
-    //     retry (3)
-    //     disableConcurrentBuilds()
-    // }
     stages {
         stage("Read JSON File"){
             steps{
@@ -26,14 +21,14 @@ pipeline {
             steps {
                 // Add build steps here
                 sh """
-                    echo Building the build ${Package_version}
+                    echo Building the build ${PackageVersion}
                     """ 
             }
         }
         stage('Test') {
             steps {
                 // Add test steps here
-                sh 'echo "Testing..${TESTING_VERSION}."'
+                sh 'echo "Testing..."'
             }
         }
         stage('Deploy') {
@@ -44,7 +39,7 @@ pipeline {
             }
             steps {
                 // Add deploy steps here
-                sh 'echo "Deploying...${DEPLOYING_VERSION}"'
+                sh 'echo "Deploying..."'
             }
         }
         stage('release') {
