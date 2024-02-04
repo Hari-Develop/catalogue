@@ -8,11 +8,11 @@ pipeline {
         // using the envirnoment varibales here
         Package_version = ''
     }
-    options {
-        timeout (time: 1, unit: "SECONDS")
-        retry (3)
-        disableConcurrentBuilds()
-    }
+    // options {
+    //     timeout (time: 1, unit: "SECONDS")
+    //     retry (3)
+    //     disableConcurrentBuilds()
+    // }
     stages {
         stage("Read JSON File"){
         steps{
