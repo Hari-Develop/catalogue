@@ -11,11 +11,12 @@ pipeline {
         nexusURL = "172.31.32.58:8081"
     }
     stages {
-        stage("Getting the version of the file"){
-            steps{
+        stage("Getting the version of the file") {
+            steps {
                 script {
                     def Package_version = readJSON file: 'package.json'
                     PackageVersion = Package_version.version
+                    echo "application version: $Package_version"
                 }
             }
         }
