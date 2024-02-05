@@ -5,7 +5,7 @@ pipeline {
         } 
     }
     environment {
-        // using the envirnoment varibales here
+        // using the environment variables here
         PackageVersion = ''
     }
     stages {
@@ -17,14 +17,15 @@ pipeline {
                 }
             }
         }
-        stage('installing dependences') {
+        stage('installing dependencies') {
             steps {
                 // Add npm steps here
                 sh """
-                    echo installing npm dependences 
+                    echo installing npm dependencies 
                     pwd
                     npm install
                     ls -la
+                    zip -r catalogue.zip ./* -x jenkinsfile -x ".git" "Jenkinsfile"
                     """ 
             }
         }
@@ -53,15 +54,17 @@ pipeline {
         }
         
     }
+
     post {
         always {
-            echo "pipline is running...."
+            echo "pipeline is running...."
+            deleteDir()
         }
         failure {
-            echo "pipline is failure..."
+            echo "pipeline is failure..."
         }
         success {
-            echo "pipline is success...party..ledha..pushpa.."
+            echo "pipeline is success...party..ledha..pushpa.."
         }
     }
-}
+} 
