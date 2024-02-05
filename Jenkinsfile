@@ -34,7 +34,7 @@ pipeline {
                 // Add npm steps here
                 sh """
                     ls -la
-                    zip -r catalogue.zip ./* -x jenkinsfile -x ".git" "*Jenkinsfile" "*.zip"
+                    zip -q -r catalogue.zip ./* -x jenkinsfile -x ".git" "*Jenkinsfile" "*.zip"
                     ls -a
                     """ 
             }
