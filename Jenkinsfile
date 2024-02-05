@@ -5,16 +5,13 @@ pipeline {
             label 'Jenkins_agent'
         } 
     }
-
-
     environment {
         // using the environment variables here
         PackageVersion = ''
+        nexusURL = "172.31.32.58:8081"
     }
-
-
     stages {
-        stage("Read JSON File"){
+        stage("Getting the version of the file"){
             steps{
                 script {
                     def Package_version = readJSON file: 'package.json'
@@ -22,8 +19,6 @@ pipeline {
                 }
             }
         }
-
-
         stage('installing dependencies') {
             steps {
                 // Add npm steps here
@@ -31,22 +26,38 @@ pipeline {
                     echo installing npm dependencies 
                     pwd
                     npm install
+                    """ 
+            }
+        }
+        stage('Building Application') {
+            steps {
+                // Add npm steps here
+                sh """
                     ls -la
-                    zip -r catalogue.zip ./* -x jenkinsfile -x ".git" "Jenkinsfile"
+                    zip -r catalogue.zip ./* -x jenkinsfile -x ".git" "*Jenkinsfile" "*.zip"
                     ls -a
                     """ 
             }
         }
-
-
-        stage('Test') {
+        stage('punshing the arifactory into nexus') {
             steps {
-                // Add test steps here
-                sh 'echo "Testing..."'
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: '${nexusURL}',
+                        groupId: 'com.roboshop',
+                        version: '${PackageVersion}',
+                        repository: 'catalogue',
+                        credentialsId: 'nexus-cred',
+                        artifacts: [
+                            [artifactId: 'catalogue',
+                            classifier: '',
+                            file: 'catalogue.zip',
+                            type: 'zip']
+                        ]
+                    )
             }
         }
-
-
         stage('Deploy') {
             input {
                 message "Should we continue?"
@@ -58,8 +69,6 @@ pipeline {
                 sh 'echo "Deploying..."'
             }
         }
-
-
         stage('release') {
             steps {
                 // Add release steps here
@@ -68,7 +77,6 @@ pipeline {
         }
         
     }
-
     post {
         always {
             echo "pipeline is running...."
@@ -81,6 +89,4 @@ pipeline {
             echo "pipeline is success...party..ledha..pushpa.."
         }
     }
-
-
 } 
