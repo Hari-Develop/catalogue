@@ -61,15 +61,12 @@ pipeline {
             }
         }
         stage('Deploy') {
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "alice,bob"
-            }
-            steps {
-                // Add deploy steps here
-                sh 'echo "Deploying..."'
-            }
+                steps {
+                    build job: 'catalogue-deploy' , wait: true , parameters [
+                        string(name: 'version' , value: "$PackageVersion"),
+                        string(name: 'environment' , value: "dev")
+                    ]
+                }
         }
         stage('release') {
             steps {
