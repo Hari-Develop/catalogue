@@ -8,7 +8,7 @@ pipeline {
     environment {
         // using the environment variables here
         PackageVersion = ''
-        nexusURL = '172.31.32.58:8081/repository'
+        nexusURL = '172.31.32.58:8081'
     }
     stages {
         stage("Getting the version of the file") {
