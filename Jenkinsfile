@@ -8,7 +8,7 @@ pipeline {
     environment {
         // using the environment variables here
         PackageVersion = ''
-        nexusURL = "172.31.32.58:8081"
+        nexusURL = '172.31.32.58:8081'
     }
     stages {
         stage("Getting the version of the file") {
@@ -16,7 +16,7 @@ pipeline {
                 script {
                     def Package_version = readJSON file: 'package.json'
                     PackageVersion = Package_version.version
-                    echo "application version: $Package_version"
+                    echo "application version: $PackageVersion"
                 }
             }
         }
@@ -45,9 +45,9 @@ pipeline {
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
-                        nexusUrl: '$nexusURL',
+                        nexusUrl: '${nexusURL}',
                         groupId: 'com.roboshop',
-                        version: "$PackageVersion",
+                        version: '${PackageVersion}',
                         repository: 'catalogue',
                         credentialsId: 'nexus-cred',
                         artifacts: [
