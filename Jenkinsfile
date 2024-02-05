@@ -8,7 +8,7 @@ pipeline {
     environment {
         // using the environment variables here
         PackageVersion = ''
-        nexusURL = '172.31.32.58:8081'
+        nexusURL = '172.31.32.58:8081/repository'
     }
     stages {
         stage("Getting the version of the file") {
@@ -17,6 +17,7 @@ pipeline {
                     def Package_version = readJSON file: 'package.json'
                     PackageVersion = Package_version.version
                     echo "application version: $PackageVersion"
+                    echo "application URL: $nexusURL"
                 }
             }
         }
