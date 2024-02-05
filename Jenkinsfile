@@ -1,13 +1,18 @@
 pipeline {
+
     agent {
         node {
             label 'Jenkins_agent'
         } 
     }
+
+
     environment {
         // using the environment variables here
         PackageVersion = ''
     }
+
+
     stages {
         stage("Read JSON File"){
             steps{
@@ -17,6 +22,8 @@ pipeline {
                 }
             }
         }
+
+
         stage('installing dependencies') {
             steps {
                 // Add npm steps here
@@ -26,15 +33,20 @@ pipeline {
                     npm install
                     ls -la
                     zip -r catalogue.zip ./* -x jenkinsfile -x ".git" "Jenkinsfile"
+                    ls -a
                     """ 
             }
         }
+
+
         stage('Test') {
             steps {
                 // Add test steps here
                 sh 'echo "Testing..."'
             }
         }
+
+
         stage('Deploy') {
             input {
                 message "Should we continue?"
@@ -46,6 +58,8 @@ pipeline {
                 sh 'echo "Deploying..."'
             }
         }
+
+
         stage('release') {
             steps {
                 // Add release steps here
@@ -67,4 +81,6 @@ pipeline {
             echo "pipeline is success...party..ledha..pushpa.."
         }
     }
+
+
 } 
