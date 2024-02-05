@@ -34,7 +34,7 @@ pipeline {
                 // Add npm steps here
                 sh """
                     ls -la
-                    zip -q -r catalogue.zip ./* -x jenkinsfile -x ".git" "*Jenkinsfile" "*.zip"
+                    zip -q -r catalogue.zip ./* -x jenkinsfile -x ".git" -x "*Jenkinsfile" -x "*.zip"
                     ls -a
                     """ 
             }
@@ -44,9 +44,9 @@ pipeline {
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
-                        nexusUrl: '${nexusURL}',
+                        nexusUrl: '$nexusURL',
                         groupId: 'com.roboshop',
-                        version: '${PackageVersion}',
+                        version: "$PackageVersion",
                         repository: 'catalogue',
                         credentialsId: 'nexus-cred',
                         artifacts: [
