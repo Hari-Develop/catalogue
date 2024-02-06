@@ -62,10 +62,12 @@ pipeline {
         }
         stage('Deploy') {
                 steps {
-                    build job: 'catalogue-deploy' , wait: true , parameters [
-                        string(name: 'version' , value: "$PackageVersion"),
-                        string(name: 'environment' , value: "dev")
-                    ]
+                    script {
+                        build job: 'catalogue-deploy' , wait: true , parameters [
+                            string(name: 'version' , value: "$PackageVersion"),
+                            string(name: 'environment' , value: "dev")
+                        ]
+                    }
                 }
         }
         stage('release') {
