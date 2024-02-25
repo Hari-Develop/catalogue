@@ -5,9 +5,9 @@ def configMap = [
     component: "catalogue"
 ]
 
-if ( ! env.BRANCH_NAME.equalsIgnoreCase('main')){
+if(! env.BRANCH_NAME.equalsIgnoreCase('main')){
     pipelineDession.decidePipeline(configMap)
 }
 else {
-    echo "This is production, we need to get the CR approval"
+    echo "This is the production request"
 }
